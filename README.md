@@ -66,11 +66,5 @@ Inicialmente, parte dos testes falhará, porque a lógica de desconto ainda não
 O objetivo do participante é localizar o ponto correto da modificação, implementar a feature e fazer todos os testes passarem.
 Realizar um teste de ponta a ponta para concretizar todas as regras de negocios.
 
-## Evidências da arquitetura em camadas
-- Organização por **controller / service / repository / model**
-- Regra de negócio concentrada na camada **service**
-- Fluxo vertical tradicional
-- Ausência de use cases explícitos e independentes
-
 ## Diagrama de arquitetura
 Os arquivos do diagrama estão em `docs/`.
