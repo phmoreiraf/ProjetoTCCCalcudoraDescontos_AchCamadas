@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Marketplace de Acessórios</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Marketplace de Acessórios para Celulares</h1>
+        <p>Projeto de experimento para comparar arquitetura em camadas e Clean Architecture.</p>
+    </header>
+
+    <section class="card">
+        <h2>Produtos disponíveis</h2>
+        <form method="post" th:action="@{/cart/summary}">
+            <table>
+                <thead>
+                <tr>
+                    <th>Selecionado</th>
+                    <th>Produto</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products}">
+                    <td>
+                        <input type="hidden" name="productId" th:value="${product.id}">
+                        <span>✔</span>
+                    </td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.category}"></td>
+                    <td th:text="${'R$ ' + product.price}"></td>
+                    <td><input type="number" name="quantity" min="0" value="0"></td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="submit">Montar carrinho</button>
+        </form>
+    </section>
+
+    <section class="card" th:if="${summary != null}">
+        <h2>Resumo do carrinho</h2>
+
+        <div class="warning" th:if="${featurePending}">
+            A feature de cálculo de descontos e total final ainda não foi implementada neste template.
+            Os testes unitários já foram preparados para guiar a implementação.
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Qtd.</th>
+                <th>Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${summary.items}">
+                <td th:text="${item.product.name}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="${'R$ ' + item.calculateSubtotal()}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="summary-box">
+            <p><strong>Subtotal:</strong> <span th:text="${'R$ ' + summary.subtotal}"></span></p>
+            <p><strong>Desconto:</strong> <span th:text="${summary.discountPercent + '%'}"></span></p>
+            <p><strong>Total final:</strong> <span th:text="${'R$ ' + summary.total}"></span></p>
+        </div>
+    </section>
+</div>
+</body>
+</html>
