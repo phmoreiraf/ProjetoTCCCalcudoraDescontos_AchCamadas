@@ -28,17 +28,6 @@ A feature principal do experimento é a implementação da regra de **cálculo d
 - O desconto total é **cumulativo**
 - O desconto total **não pode ultrapassar 25%**
 
-## Estrutura em camadas
-
-```text
-src/main/java/com/example/marketplace
-├── controller
-├── model
-├── repository
-├── service
-└── MarketplaceApplication.java
-```
-
 ## Tecnologias
 - Java 17
 - Spring Boot 3
@@ -54,19 +43,6 @@ src/main/java/com/example/marketplace
 - Testes unitários já implementados
 - Documentação da atividade
 - Diagrama da arquitetura em camadas
-
-## O que falta implementar
-A classe abaixo contém a feature incompleta:
-
-```text
-src/main/java/com/example/marketplace/service/CartService.java
-```
-
-O método a ser concluído é:
-
-```java
-public CartSummary buildSummary(List<CartSelection> selections)
-```
 
 ## Como executar
 
@@ -88,6 +64,7 @@ mvn test
 ## Resultado esperado no experimento
 Inicialmente, parte dos testes falhará, porque a lógica de desconto ainda não foi implementada.
 O objetivo do participante é localizar o ponto correto da modificação, implementar a feature e fazer todos os testes passarem.
+Realizar um teste de ponta a ponta para concretizar todas as regras de negocios.
 
 ## Evidências da arquitetura em camadas
 - Organização por **controller / service / repository / model**
