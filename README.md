@@ -1,9 +1,5 @@
 # Sistema de Cálculo de Descontos para Marketplace em Arquitetura em Camadas
 
-Projeto base em **Spring Boot** para um experimento acadêmico de comparação arquitetural entre **Arquitetura em Camadas** e **Clean Architecture**.
-
-Este repositório representa a versão em **arquitetura em camadas**.
-
 ## Objetivo do projeto
 
 O sistema simula um pequeno marketplace de acessórios para celulares. Os produtos ficam carregados em memória e o usuário pode selecionar quantidades para montar um carrinho.
