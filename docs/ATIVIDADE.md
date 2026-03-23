@@ -18,15 +18,15 @@ Você recebeu a versão do sistema implementada com **arquitetura em camadas**.
 ### 1. Desconto por quantidade total de itens
 - 1 item = 0%
 - 2 itens = 5%
-- 3 itens = 10%
-- 4 ou mais itens = 15%
+- 3 itens = 7%
+- 4 ou mais itens = 10%
 
 ### 2. Desconto adicional por categoria
-- CAPINHA = 5%
-- CARREGADOR = 10%
-- FONE = 8%
-- PELICULA = 0%
-- SUPORTE = 0%
+- CAPINHA = 3%
+- CARREGADOR = 5%
+- FONE = 3%
+- PELICULA = 2%
+- SUPORTE = 2%
 
 ### 3. Regra de desconto máximo
 - A soma dos descontos é cumulativa

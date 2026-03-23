@@ -30,8 +30,8 @@ class CartServiceTest {
         CartSummary summary = cartService.buildSummary(selections);
 
         assertEquals(new BigDecimal("29.90"), summary.getSubtotal().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("0.00"), summary.getDiscountValue().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("29.90"), summary.getTotal().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("2.00"), summary.getDiscountPercent().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("29.30"), summary.getTotal().setScale(2, RoundingMode.HALF_UP));
     }
 
     @Test
@@ -43,8 +43,8 @@ class CartServiceTest {
         CartSummary summary = cartService.buildSummary(selections);
 
         assertEquals(new BigDecimal("89.80"), summary.getSubtotal().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("5.00"), summary.getDiscountPercent().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("85.31"), summary.getTotal().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("9.00"), summary.getDiscountPercent().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("81.72"), summary.getTotal().setScale(2, RoundingMode.HALF_UP));
     }
 
     @Test
@@ -58,8 +58,8 @@ class CartServiceTest {
         CartSummary summary = cartService.buildSummary(selections);
 
         assertEquals(new BigDecimal("399.60"), summary.getSubtotal().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("25.00"), summary.getDiscountPercent().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("299.70"), summary.getTotal().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("23.00"), summary.getDiscountPercent().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("307.69"), summary.getTotal().setScale(2, RoundingMode.HALF_UP));
     }
 
     @Test
@@ -70,7 +70,7 @@ class CartServiceTest {
         CartSummary summary = cartService.buildSummary(selections);
 
         assertEquals(new BigDecimal("49.90"), summary.getSubtotal().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("5.00"), summary.getDiscountPercent().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("47.41"), summary.getTotal().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("3.00"), summary.getDiscountPercent().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("48.40"), summary.getTotal().setScale(2, RoundingMode.HALF_UP));
     }
 }

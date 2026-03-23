@@ -61,9 +61,9 @@ public class CartService {
         if (totalQuantity == 2) {
             quantityDiscount = new BigDecimal("5");
         } else if (totalQuantity == 3) {
-            quantityDiscount = new BigDecimal("10");
+            quantityDiscount = new BigDecimal("7");
         } else if (totalQuantity >= 4) {
-            quantityDiscount = new BigDecimal("15");
+            quantityDiscount = new BigDecimal("10");
         }
 
         // -------------------------
@@ -76,13 +76,19 @@ public class CartService {
 
             switch (category) {
                 case CAPINHA:
-                    categoryDiscount = categoryDiscount.add(new BigDecimal("5"));
+                    categoryDiscount = categoryDiscount.add(new BigDecimal("3"));
                     break;
                 case CARREGADOR:
-                    categoryDiscount = categoryDiscount.add(new BigDecimal("10"));
+                    categoryDiscount = categoryDiscount.add(new BigDecimal("5"));
                     break;
                 case FONE:
-                    categoryDiscount = categoryDiscount.add(new BigDecimal("8"));
+                    categoryDiscount = categoryDiscount.add(new BigDecimal("3"));
+                    break;
+                case PELICULA:
+                    categoryDiscount = categoryDiscount.add(new BigDecimal("2"));
+                    break;
+                case SUPORTE:
+                    categoryDiscount = categoryDiscount.add(new BigDecimal("2"));
                     break;
                 default:
                     break;
