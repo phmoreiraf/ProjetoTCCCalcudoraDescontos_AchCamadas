@@ -45,11 +45,6 @@
     <section class="card" th:if="${summary != null}">
         <h2>Resumo do carrinho</h2>
 
-        <div class="warning" th:if="${featurePending}">
-            A feature de cálculo de descontos e total final ainda não foi implementada neste template.
-            Os testes unitários já foram preparados para guiar a implementação.
-        </div>
-
         <table>
             <thead>
             <tr>

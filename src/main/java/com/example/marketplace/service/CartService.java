@@ -1,15 +1,17 @@
 package com.example.marketplace.service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.example.marketplace.model.CartItem;
 import com.example.marketplace.model.CartSelection;
 import com.example.marketplace.model.CartSummary;
 import com.example.marketplace.model.Product;
+import com.example.marketplace.model.ProductCategory;
 import com.example.marketplace.repository.ProductRepository;
-import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class CartService {
@@ -21,40 +23,101 @@ public class CartService {
     }
 
     public CartSummary buildSummary(List<CartSelection> selections) {
+
         List<CartItem> items = new ArrayList<>();
 
+        // =========================
+        // Monta os itens do carrinho
+        // =========================
         for (CartSelection selection : selections) {
             Product product = productRepository.findById(selection.getProductId())
-                    .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado: " + selection.getProductId()));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException("Produto não encontrado: " + selection.getProductId()));
 
             items.add(new CartItem(product, selection.getQuantity()));
         }
 
+        // =========================
+        // Calcula subtotal
+        // =========================
         BigDecimal subtotal = items.stream()
                 .map(CartItem::calculateSubtotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        // TODO: Implementar a feature do experimento.
-        // Regras esperadas:
-        // 1) desconto por quantidade:
-        //    1 item = 0%
-        //    2 itens = 5%
-        //    3 itens = 10%
-        //    4 ou mais = 15%
-        // 2) desconto por categoria:
-        //    CAPINHA = 5%
-        //    CARREGADOR = 10%
-        //    FONE = 8%
-        //    demais = 0%
-        // 3) o desconto total é cumulativo, mas limitado a 25%
-        // 4) o total final = subtotal - valor do desconto
-        //
-        // Neste template inicial, a feature ainda NÃO foi implementada.
-        // Por isso, os testes unitários devem falhar até que o aluno conclua a lógica.
+        // =========================================================
+        // 🔴 INÍCIO DA IMPLEMENTAÇÃO (REMOVER PARA O EXPERIMENTO)
+        // =========================================================
 
-        BigDecimal discountPercent = BigDecimal.ZERO;
-        BigDecimal discountValue = BigDecimal.ZERO;
-        BigDecimal total = subtotal;
+        // Quantidade total de itens
+        int totalQuantity = items.stream()
+                .mapToInt(CartItem::getQuantity)
+                .sum();
+
+        // -------------------------
+        // DESCONTO POR QUANTIDADE
+        // -------------------------
+        BigDecimal quantityDiscount = BigDecimal.ZERO;
+
+        if (totalQuantity == 2) {
+            quantityDiscount = new BigDecimal("5");
+        } else if (totalQuantity == 3) {
+            quantityDiscount = new BigDecimal("10");
+        } else if (totalQuantity >= 4) {
+            quantityDiscount = new BigDecimal("15");
+        }
+
+        // -------------------------
+        // DESCONTO POR CATEGORIA
+        // -------------------------
+        BigDecimal categoryDiscount = BigDecimal.ZERO;
+
+        for (CartItem item : items) {
+            ProductCategory category = item.getProduct().getCategory();
+
+            switch (category) {
+                case CAPINHA:
+                    categoryDiscount = categoryDiscount.add(new BigDecimal("5"));
+                    break;
+                case CARREGADOR:
+                    categoryDiscount = categoryDiscount.add(new BigDecimal("10"));
+                    break;
+                case FONE:
+                    categoryDiscount = categoryDiscount.add(new BigDecimal("8"));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // -------------------------
+        // SOMA DOS DESCONTOS
+        // -------------------------
+        BigDecimal discountPercent = quantityDiscount.add(categoryDiscount);
+
+        // -------------------------
+        // LIMITE MÁXIMO (25%)
+        // -------------------------
+        BigDecimal maxDiscount = new BigDecimal("25");
+
+        if (discountPercent.compareTo(maxDiscount) > 0) {
+            discountPercent = maxDiscount;
+        }
+
+        // -------------------------
+        // VALOR DO DESCONTO
+        // -------------------------
+        BigDecimal discountValue = subtotal
+                .multiply(discountPercent)
+                .divide(new BigDecimal("100"));
+
+        // -------------------------
+        // TOTAL FINAL
+        // -------------------------
+        BigDecimal total = subtotal.subtract(discountValue);
+
+        // =========================================================
+        // 🔴 FIM DA IMPLEMENTAÇÃO (REMOVER PARA O EXPERIMENTO)
+        // =========================================================
 
         return new CartSummary(items, subtotal, discountPercent, discountValue, total);
     }
