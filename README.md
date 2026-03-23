@@ -44,3 +44,7 @@ Os arquivos do diagrama estão em `docs/`.
 
 ## Regras de negocios e cenarios de testes
 Os arquivos estão em `docs/`.
+
+## Responda o formulario de feedback (OBRIGATÓRIO)
+Após a conclusão da atividade, por favor, responda o formulário de feedback para ajudar na avaliação do experimento:
+[Formulário de Feedback]()
