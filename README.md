@@ -42,6 +42,10 @@ A feature principal do experimento é a implementação da regra de **cálculo d
 
 ## Como executar
 
+```Instalar dependências e compilar o projeto
+mvn clean install
+```
+
 ```bash
 mvn spring-boot:run
 ```

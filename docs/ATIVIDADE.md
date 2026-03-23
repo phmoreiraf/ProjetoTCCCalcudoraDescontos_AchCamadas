@@ -28,6 +28,8 @@ Você recebeu a versão do sistema implementada com **arquitetura em camadas**.
 - PELICULA = 2%
 - SUPORTE = 2%
 
+**Importante:** O desconto de categoria é aplicado **por item**, não por categoria única. Se o carrinho tiver 3 capinhas, o desconto de categoria será 3% + 3% + 3% = 9%.
+
 ### 3. Regra de desconto máximo
 - A soma dos descontos é cumulativa
 - O percentual total não pode ultrapassar 25%
@@ -44,4 +46,5 @@ Você recebeu a versão do sistema implementada com **arquitetura em camadas**.
 ## Resultado esperado
 Ao final da implementação:
 - todos os testes devem passar, inclusive os testes de ponta a ponta
+- Os cenarios de testes ponta a ponta estão descritos no arquivo `CENARIOSTESTES.md` e devem ser seguidos à risca para validação da implementação
 - o resumo do carrinho deve apresentar subtotal, desconto e total final corretamente
