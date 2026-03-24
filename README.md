@@ -1,10 +1,16 @@
 # Sistema de Cálculo de Descontos para Marketplace em Arquitetura em Camadas
 
-## Objetivo do projeto
+## Visão Geral do Projeto
 
-O sistema simula um pequeno marketplace de acessórios para celulares. Os produtos ficam carregados em memória e o usuário pode selecionar quantidades para montar um carrinho.
+O **Marketplace Discount Calculator** é uma aplicação web simples desenvolvida em **Java com Spring Boot**, cujo objetivo é simular um pequeno marketplace de acessórios para celulares e calcular descontos aplicados a um carrinho de compras.
 
-A feature principal do experimento é a implementação da regra de **cálculo de descontos** e do **total final do carrinho**.
+O sistema foi projetado para fins acadêmicos, servindo como base para análise e comparação de arquiteturas de software. Com separação entre apresentação, serviço, persistência e modelo de domínio.
+
+A aplicação permite visualizar produtos cadastrados localmente em memória, selecionar itens para compor um carrinho e gerar um resumo da compra contendo subtotal, percentual de desconto, valor descontado e total final.
+
+As regras de negócio consideram desconto por quantidade de itens, desconto por categoria de produto e um limite máximo de desconto acumulado. O projeto também inclui testes unitários para validar o comportamento esperado da funcionalidade principal.
+
+Além do uso prático em Spring Boot, este sistema foi estruturado para apoiar atividades experimentais de implementação e compreensão arquitetural.
 
 ## Tecnologias
 - Java 17
