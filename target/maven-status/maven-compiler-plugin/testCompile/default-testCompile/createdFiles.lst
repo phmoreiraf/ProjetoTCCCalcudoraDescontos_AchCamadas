@@ -1,1 +1,4 @@
+com\example\marketplace\controller\CartControllerTest.class
 com\example\marketplace\service\CartServiceTest.class
+com\example\marketplace\architecture\LayeredArchitectureTest.class
+com\example\marketplace\controller\HomeControllerTest.class

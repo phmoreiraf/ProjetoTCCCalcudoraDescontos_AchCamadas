@@ -1,0 +1,204 @@
+@startuml
+' ============================================
+' CONFIGURAÇÕES VISUAIS
+' ============================================
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam packageStyle rectangle
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontSize 11
+
+' Cores por camada
+skinparam package<<apresentacao>> {
+  BackgroundColor #E3F2FD
+  BorderColor #1976D2
+}
+
+skinparam package<<servico>> {
+  BackgroundColor #FFF3E0
+  BorderColor #F57C00
+}
+
+skinparam package<<persistencia>> {
+  BackgroundColor #F3E5F5
+  BorderColor #7B1FA2
+}
+
+skinparam package<<modelo>> {
+  BackgroundColor #E8F5E9
+  BorderColor #388E3C
+}
+
+title Sistema de Cálculo de Descontos - Marketplace
+
+' ============================================
+' CAMADA DE APRESENTAÇÃO
+' ============================================
+package "Camada de Apresentação" <<apresentacao>> {
+  
+  class HomeController <<@Controller>> {
+    - servicoProdutos: ProductService
+    ____
+    + HomeController(servicoProdutos: ProductService)
+    ____
+    + index(modelo: Model): String
+  }
+
+  class CartController <<@Controller>> {
+    - servicoCarrinho: CartService
+    - servicoProdutos: ProductService
+    ____
+    + CartController(servicoCarrinho: CartService,\n    servicoProdutos: ProductService)
+    ____
+    + calcularResumo(idsProdutos: List<Long>,\n    quantidades: List<Integer>,\n    modelo: Model): String
+  }
+}
+
+' ============================================
+' CAMADA DE SERVIÇO
+' ============================================
+package "Camada de Serviço" <<servico>> {
+  
+  class ProductService <<@Service>> {
+    - repositorioProdutos: ProductRepository
+    ____
+    + ProductService(repositorioProdutos: ProductRepository)
+    ____
+    + listarTodos(): List<Product>
+  }
+
+  class CartService <<@Service>> {
+    - repositorioProdutos: ProductRepository
+    ____
+    + CartService(repositorioProdutos: ProductRepository)
+    ____
+    + construirResumo(selecoes: List<CartSelection>): CartSummary
+  }
+}
+
+' ============================================
+' CAMADA DE PERSISTÊNCIA
+' ============================================
+package "Camada de Persistência" <<persistencia>> {
+  
+  interface ProductRepository <<interface>> {
+    + buscarTodos(): List<Product>
+    + buscarPorId(id: Long): Optional<Product>
+  }
+
+  class InMemoryProductRepository <<@Repository>> {
+    - produtos: List<Product>
+    ____
+    + InMemoryProductRepository()
+    ____
+    + buscarTodos(): List<Product>
+    + buscarPorId(id: Long): Optional<Product>
+  }
+}
+
+' ============================================
+' CAMADA DE MODELO
+' ============================================
+package "Camada de Modelo" <<modelo>> {
+  
+  class Product {
+    - id: Long
+    - nome: String
+    - preco: BigDecimal
+    - categoria: ProductCategory
+    ____
+    + Product(id: Long, nome: String,\n    preco: BigDecimal, categoria: ProductCategory)
+    ____
+    + getId(): Long
+    + getNome(): String
+    + getPreco(): BigDecimal
+    + getCategoria(): ProductCategory
+  }
+
+  enum ProductCategory {
+    CAPINHA
+    CARREGADOR
+    FONE
+    PELICULA
+    SUPORTE
+  }
+
+  class CartSelection {
+    - produtoId: Long
+    - quantidade: Integer
+    ____
+    + CartSelection()
+    + CartSelection(produtoId: Long, quantidade: Integer)
+    ____
+    + getProdutoId(): Long
+    + setProdutoId(produtoId: Long): void
+    + getQuantidade(): Integer
+    + setQuantidade(quantidade: Integer): void
+  }
+
+  class CartItem {
+    - produto: Product
+    - quantidade: int
+    ____
+    + CartItem(produto: Product, quantidade: int)
+    ____
+    + calcularSubtotal(): BigDecimal
+    + getProduto(): Product
+    + getQuantidade(): int
+  }
+
+  class CartSummary {
+    - itens: List<CartItem>
+    - subtotal: BigDecimal
+    - percentualDesconto: BigDecimal
+    - valorDesconto: BigDecimal
+    - total: BigDecimal
+    ____
+    + CartSummary(itens: List<CartItem>, subtotal: BigDecimal,\n    percentualDesconto: BigDecimal, valorDesconto: BigDecimal,\n    total: BigDecimal)
+    ____
+    + getItens(): List<CartItem>
+    + getSubtotal(): BigDecimal
+    + getPercentualDesconto(): BigDecimal
+    + getValorDesconto(): BigDecimal
+    + getTotal(): BigDecimal
+  }
+}
+
+' ============================================
+' RELACIONAMENTOS
+' ============================================
+
+' Apresentação -> Serviço
+HomeController --> ProductService
+CartController --> CartService
+CartController --> ProductService
+
+' Serviço -> Persistência
+ProductService --> ProductRepository
+CartService --> ProductRepository
+
+' Persistência -> Modelo
+InMemoryProductRepository ..|> ProductRepository
+InMemoryProductRepository ..> Product
+
+' Serviço -> Modelo
+ProductService ..> Product
+CartService ..> Product
+CartService ..> CartSelection
+CartService ..> CartItem
+CartService ..> CartSummary
+
+' Controllers -> Modelo
+CartController ..> CartSelection
+CartController ..> CartSummary
+
+' Relacionamentos de Modelo
+Product --> ProductCategory
+CartItem --> Product
+CartSelection ..> Product
+CartSummary *-- "0..*" CartItem
+
+@enduml

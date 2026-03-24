@@ -18,6 +18,7 @@ Além do uso prático em Spring Boot, este sistema foi estruturado para apoiar a
 - Thymeleaf
 - JUnit 5
 - Maven
+- ArchUnit 1.2.1 (Testes de Arquitetura)
 
 ## Como executar
 
@@ -36,8 +37,42 @@ http://localhost:8080
 
 ## Como executar os testes
 
+### Executar todos os testes
 ```bash
 mvn test
+```
+
+### Executar apenas os testes de arquitetura (ArchUnit)
+```bash
+mvn test -Dtest=LayeredArchitectureTest
+```
+
+### Executar testes com relatório de cobertura
+```bash
+mvn clean test jacoco:report
+```
+
+O relatório de cobertura será gerado em:
+```
+target/site/jacoco/index.html
+```
+
+## Cobertura de Testes
+
+Para visualizar a cobertura de testes do projeto:
+
+1. Execute os testes com cobertura:
+```bash
+mvn clean test jacoco:report
+```
+
+2. Abra o relatório HTML gerado:
+```bash
+# No Windows
+start target/site/jacoco/index.html
+
+# No Linux/Mac
+open target/site/jacoco/index.html
 ```
 
 ## Resultado esperado no experimento
