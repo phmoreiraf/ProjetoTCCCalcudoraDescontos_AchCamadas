@@ -5,19 +5,19 @@ import java.math.BigDecimal;
 public class Product {
 
     private Long id;
-    private String name;
-    private BigDecimal price;
-    private ProductCategory category;
+    private String nome;
+    private BigDecimal preco;
+    private ProductCategory categoria;
 
-    public Product(Long id, String name, BigDecimal price, ProductCategory category) {
+    public Product(Long id, String nome, BigDecimal preco, ProductCategory categoria) {
         this.id = id;
-        this.name = name;
-        this.price = price;
-        this.category = category;
+        this.nome = nome;
+        this.preco = preco;
+        this.categoria = categoria;
     }
 
     public Long getId() { return id; }
-    public String getName() { return name; }
-    public BigDecimal getPrice() { return price; }
-    public ProductCategory getCategory() { return category; }
+    public String getNome() { return nome; }
+    public BigDecimal getPreco() { return preco; }
+    public ProductCategory getCategoria() { return categoria; }
 }

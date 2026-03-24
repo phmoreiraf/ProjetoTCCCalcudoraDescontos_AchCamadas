@@ -16,32 +16,32 @@ import com.example.marketplace.repository.ProductRepository;
 @Service
 public class CartService {
 
-    private final ProductRepository productRepository;
+    private final ProductRepository repositorioProdutos;
 
-    public CartService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public CartService(ProductRepository repositorioProdutos) {
+        this.repositorioProdutos = repositorioProdutos;
     }
 
-    public CartSummary buildSummary(List<CartSelection> selections) {
+    public CartSummary construirResumo(List<CartSelection> selecoes) {
 
-        List<CartItem> items = new ArrayList<>();
+        List<CartItem> itens = new ArrayList<>();
 
         // =========================
         // Monta os itens do carrinho
         // =========================
-        for (CartSelection selection : selections) {
-            Product product = productRepository.findById(selection.getProductId())
+        for (CartSelection selecao : selecoes) {
+            Product produto = repositorioProdutos.buscarPorId(selecao.getProdutoId())
                     .orElseThrow(
-                            () -> new IllegalArgumentException("Produto não encontrado: " + selection.getProductId()));
+                            () -> new IllegalArgumentException("Produto não encontrado: " + selecao.getProdutoId()));
 
-            items.add(new CartItem(product, selection.getQuantity()));
+            itens.add(new CartItem(produto, selecao.getQuantidade()));
         }
 
         // =========================
         // Calcula subtotal
         // =========================
-        BigDecimal subtotal = items.stream()
-                .map(CartItem::calculateSubtotal)
+        BigDecimal subtotal = itens.stream()
+                .map(CartItem::calcularSubtotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         // =========================================================
@@ -49,46 +49,46 @@ public class CartService {
         // =========================================================
 
         // Quantidade total de itens
-        int totalQuantity = items.stream()
-                .mapToInt(CartItem::getQuantity)
+        int quantidadeTotal = itens.stream()
+                .mapToInt(CartItem::getQuantidade)
                 .sum();
 
         // -------------------------
         // DESCONTO POR QUANTIDADE
         // -------------------------
-        BigDecimal quantityDiscount = BigDecimal.ZERO;
+        BigDecimal descontoQuantidade = BigDecimal.ZERO;
 
-        if (totalQuantity == 2) {
-            quantityDiscount = new BigDecimal("5");
-        } else if (totalQuantity == 3) {
-            quantityDiscount = new BigDecimal("7");
-        } else if (totalQuantity >= 4) {
-            quantityDiscount = new BigDecimal("10");
+        if (quantidadeTotal == 2) {
+            descontoQuantidade = new BigDecimal("5");
+        } else if (quantidadeTotal == 3) {
+            descontoQuantidade = new BigDecimal("7");
+        } else if (quantidadeTotal >= 4) {
+            descontoQuantidade = new BigDecimal("10");
         }
 
         // -------------------------
         // DESCONTO POR CATEGORIA
         // -------------------------
-        BigDecimal categoryDiscount = BigDecimal.ZERO;
+        BigDecimal descontoCategoria = BigDecimal.ZERO;
 
-        for (CartItem item : items) {
-            ProductCategory category = item.getProduct().getCategory();
+        for (CartItem item : itens) {
+            ProductCategory categoria = item.getProduto().getCategoria();
 
-            switch (category) {
+            switch (categoria) {
                 case CAPINHA:
-                    categoryDiscount = categoryDiscount.add(new BigDecimal("3"));
+                    descontoCategoria = descontoCategoria.add(new BigDecimal("3"));
                     break;
                 case CARREGADOR:
-                    categoryDiscount = categoryDiscount.add(new BigDecimal("5"));
+                    descontoCategoria = descontoCategoria.add(new BigDecimal("5"));
                     break;
                 case FONE:
-                    categoryDiscount = categoryDiscount.add(new BigDecimal("3"));
+                    descontoCategoria = descontoCategoria.add(new BigDecimal("3"));
                     break;
                 case PELICULA:
-                    categoryDiscount = categoryDiscount.add(new BigDecimal("2"));
+                    descontoCategoria = descontoCategoria.add(new BigDecimal("2"));
                     break;
                 case SUPORTE:
-                    categoryDiscount = categoryDiscount.add(new BigDecimal("2"));
+                    descontoCategoria = descontoCategoria.add(new BigDecimal("2"));
                     break;
                 default:
                     break;
@@ -98,33 +98,33 @@ public class CartService {
         // -------------------------
         // SOMA DOS DESCONTOS
         // -------------------------
-        BigDecimal discountPercent = quantityDiscount.add(categoryDiscount);
+        BigDecimal percentualDesconto = descontoQuantidade.add(descontoCategoria);
 
         // -------------------------
         // LIMITE MÁXIMO (25%)
         // -------------------------
-        BigDecimal maxDiscount = new BigDecimal("25");
+        BigDecimal descontoMaximo = new BigDecimal("25");
 
-        if (discountPercent.compareTo(maxDiscount) > 0) {
-            discountPercent = maxDiscount;
+        if (percentualDesconto.compareTo(descontoMaximo) > 0) {
+            percentualDesconto = descontoMaximo;
         }
 
         // -------------------------
         // VALOR DO DESCONTO
         // -------------------------
-        BigDecimal discountValue = subtotal
-                .multiply(discountPercent)
+        BigDecimal valorDesconto = subtotal
+                .multiply(percentualDesconto)
                 .divide(new BigDecimal("100"));
 
         // -------------------------
         // TOTAL FINAL
         // -------------------------
-        BigDecimal total = subtotal.subtract(discountValue);
+        BigDecimal total = subtotal.subtract(valorDesconto);
 
         // =========================================================
         // 🔴 FIM DA IMPLEMENTAÇÃO (REMOVER PARA O EXPERIMENTO)
         // =========================================================
 
-        return new CartSummary(items, subtotal, discountPercent, discountValue, total);
+        return new CartSummary(itens, subtotal, percentualDesconto, valorDesconto, total);
     }
 }

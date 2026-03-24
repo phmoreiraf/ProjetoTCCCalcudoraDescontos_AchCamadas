@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    private final ProductService productService;
+    private final ProductService servicoProdutos;
 
-    public HomeController(ProductService productService) {
-        this.productService = productService;
+    public HomeController(ProductService servicoProdutos) {
+        this.servicoProdutos = servicoProdutos;
     }
 
     @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("products", productService.listAll());
+    public String index(Model modelo) {
+        modelo.addAttribute("products", servicoProdutos.listarTodos());
         return "index";
     }
 }

@@ -2,30 +2,30 @@ package com.example.marketplace.model;
 
 public class CartSelection {
 
-    private Long productId;
-    private Integer quantity;
+    private Long produtoId;
+    private Integer quantidade;
 
     public CartSelection() {
     }
 
-    public CartSelection(Long productId, Integer quantity) {
-        this.productId = productId;
-        this.quantity = quantity;
+    public CartSelection(Long produtoId, Integer quantidade) {
+        this.produtoId = produtoId;
+        this.quantidade = quantidade;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Long getProdutoId() {
+        return produtoId;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProdutoId(Long produtoId) {
+        this.produtoId = produtoId;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getQuantidade() {
+        return quantidade;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 }

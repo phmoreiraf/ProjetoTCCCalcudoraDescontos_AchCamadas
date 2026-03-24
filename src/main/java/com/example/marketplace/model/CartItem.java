@@ -4,18 +4,18 @@ import java.math.BigDecimal;
 
 public class CartItem {
 
-    private Product product;
-    private int quantity;
+    private Product produto;
+    private int quantidade;
 
-    public CartItem(Product product, int quantity) {
-        this.product = product;
-        this.quantity = quantity;
+    public CartItem(Product produto, int quantidade) {
+        this.produto = produto;
+        this.quantidade = quantidade;
     }
 
-    public BigDecimal calculateSubtotal() {
-        return product.getPrice().multiply(BigDecimal.valueOf(quantity));
+    public BigDecimal calcularSubtotal() {
+        return produto.getPreco().multiply(BigDecimal.valueOf(quantidade));
     }
 
-    public Product getProduct() { return product; }
-    public int getQuantity() { return quantity; }
+    public Product getProduto() { return produto; }
+    public int getQuantidade() { return quantidade; }
 }

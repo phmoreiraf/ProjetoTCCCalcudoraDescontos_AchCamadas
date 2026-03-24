@@ -12,21 +12,21 @@ import java.util.Optional;
 @Repository
 public class InMemoryProductRepository implements ProductRepository {
 
-    private final List<Product> products = new ArrayList<>();
+    private final List<Product> produtos = new ArrayList<>();
 
     public InMemoryProductRepository() {
-        products.add(new Product(1L, "Capinha Premium", new BigDecimal("49.90"), ProductCategory.CAPINHA));
-        products.add(new Product(2L, "Carregador Turbo 30W", new BigDecimal("119.90"), ProductCategory.CARREGADOR));
-        products.add(new Product(3L, "Fone Bluetooth AirSound", new BigDecimal("199.90"), ProductCategory.FONE));
-        products.add(new Product(4L, "Película 3D", new BigDecimal("29.90"), ProductCategory.PELICULA));
-        products.add(new Product(5L, "Suporte Veicular Magnético", new BigDecimal("59.90"), ProductCategory.SUPORTE));
+        produtos.add(new Product(1L, "Capinha Premium", new BigDecimal("49.90"), ProductCategory.CAPINHA));
+        produtos.add(new Product(2L, "Carregador Turbo 30W", new BigDecimal("119.90"), ProductCategory.CARREGADOR));
+        produtos.add(new Product(3L, "Fone Bluetooth AirSound", new BigDecimal("199.90"), ProductCategory.FONE));
+        produtos.add(new Product(4L, "Película 3D", new BigDecimal("29.90"), ProductCategory.PELICULA));
+        produtos.add(new Product(5L, "Suporte Veicular Magnético", new BigDecimal("59.90"), ProductCategory.SUPORTE));
     }
 
     @Override
-    public List<Product> findAll() { return products; }
+    public List<Product> buscarTodos() { return produtos; }
 
     @Override
-    public Optional<Product> findById(Long id) {
-        return products.stream().filter(product -> product.getId().equals(id)).findFirst();
+    public Optional<Product> buscarPorId(Long id) {
+        return produtos.stream().filter(produto -> produto.getId().equals(id)).findFirst();
     }
 }

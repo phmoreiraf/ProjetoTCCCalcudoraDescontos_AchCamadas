@@ -15,62 +15,62 @@ import com.example.marketplace.repository.InMemoryProductRepository;
 
 class CartServiceTest {
 
-    private CartService cartService;
+    private CartService servicoCarrinho;
 
     @BeforeEach
-    void setUp() {
-        cartService = new CartService(new InMemoryProductRepository());
+    void configurar() {
+        servicoCarrinho = new CartService(new InMemoryProductRepository());
     }
 
     @Test
-    void shouldCalculateSubtotalWithoutDiscountWhenOnlyOneProductIsSelected() {
-        List<CartSelection> selections = List.of(
+    void deveCalcularSubtotalSemDescontoQuandoApenasUmProdutoForSelecionado() {
+        List<CartSelection> selecoes = List.of(
                 new CartSelection(4L, 1));
 
-        CartSummary summary = cartService.buildSummary(selections);
+        CartSummary resumo = servicoCarrinho.construirResumo(selecoes);
 
-        assertEquals(new BigDecimal("29.90"), summary.getSubtotal().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("2.00"), summary.getDiscountPercent().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("29.30"), summary.getTotal().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("29.90"), resumo.getSubtotal().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("2.00"), resumo.getPercentualDesconto().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("29.30"), resumo.getTotal().setScale(2, RoundingMode.HALF_UP));
     }
 
     @Test
-    void shouldApplyQuantityDiscountWhenTwoProductsAreSelected() {
-        List<CartSelection> selections = List.of(
+    void deveAplicarDescontoDeQuantidadeQuandoDoisProdutosForemSelecionados() {
+        List<CartSelection> selecoes = List.of(
                 new CartSelection(4L, 1),
                 new CartSelection(5L, 1));
 
-        CartSummary summary = cartService.buildSummary(selections);
+        CartSummary resumo = servicoCarrinho.construirResumo(selecoes);
 
-        assertEquals(new BigDecimal("89.80"), summary.getSubtotal().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("9.00"), summary.getDiscountPercent().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("81.72"), summary.getTotal().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("89.80"), resumo.getSubtotal().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("9.00"), resumo.getPercentualDesconto().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("81.72"), resumo.getTotal().setScale(2, RoundingMode.HALF_UP));
     }
 
     @Test
-    void shouldApplyCategoryAndQuantityDiscountRespectingTheMaximumLimit() {
-        List<CartSelection> selections = List.of(
+    void deveAplicarDescontoDeCategoriaEQuantidadeRespeitandoLimiteMaximo() {
+        List<CartSelection> selecoes = List.of(
                 new CartSelection(2L, 1),
                 new CartSelection(3L, 1),
                 new CartSelection(1L, 1),
                 new CartSelection(4L, 1));
 
-        CartSummary summary = cartService.buildSummary(selections);
+        CartSummary resumo = servicoCarrinho.construirResumo(selecoes);
 
-        assertEquals(new BigDecimal("399.60"), summary.getSubtotal().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("23.00"), summary.getDiscountPercent().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("307.69"), summary.getTotal().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("399.60"), resumo.getSubtotal().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("23.00"), resumo.getPercentualDesconto().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("307.69"), resumo.getTotal().setScale(2, RoundingMode.HALF_UP));
     }
 
     @Test
-    void shouldApplyCategoryDiscountForCapinhaEvenWithoutQuantityDiscount() {
-        List<CartSelection> selections = List.of(
+    void deveAplicarDescontoDeCategoriaParaCapinhaMesmoSemDescontoDeQuantidade() {
+        List<CartSelection> selecoes = List.of(
                 new CartSelection(1L, 1));
 
-        CartSummary summary = cartService.buildSummary(selections);
+        CartSummary resumo = servicoCarrinho.construirResumo(selecoes);
 
-        assertEquals(new BigDecimal("49.90"), summary.getSubtotal().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("3.00"), summary.getDiscountPercent().setScale(2, RoundingMode.HALF_UP));
-        assertEquals(new BigDecimal("48.40"), summary.getTotal().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("49.90"), resumo.getSubtotal().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("3.00"), resumo.getPercentualDesconto().setScale(2, RoundingMode.HALF_UP));
+        assertEquals(new BigDecimal("48.40"), resumo.getTotal().setScale(2, RoundingMode.HALF_UP));
     }
 }

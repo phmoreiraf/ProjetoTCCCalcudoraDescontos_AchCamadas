@@ -9,13 +9,13 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    private final ProductRepository productRepository;
+    private final ProductRepository repositorioProdutos;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductService(ProductRepository repositorioProdutos) {
+        this.repositorioProdutos = repositorioProdutos;
     }
 
-    public List<Product> listAll() {
-        return productRepository.findAll();
+    public List<Product> listarTodos() {
+        return repositorioProdutos.buscarTodos();
     }
 }

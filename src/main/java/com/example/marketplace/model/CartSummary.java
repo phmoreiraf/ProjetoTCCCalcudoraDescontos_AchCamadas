@@ -5,23 +5,23 @@ import java.util.List;
 
 public class CartSummary {
 
-    private List<CartItem> items;
+    private List<CartItem> itens;
     private BigDecimal subtotal;
-    private BigDecimal discountPercent;
-    private BigDecimal discountValue;
+    private BigDecimal percentualDesconto;
+    private BigDecimal valorDesconto;
     private BigDecimal total;
 
-    public CartSummary(List<CartItem> items, BigDecimal subtotal, BigDecimal discountPercent, BigDecimal discountValue, BigDecimal total) {
-        this.items = items;
+    public CartSummary(List<CartItem> itens, BigDecimal subtotal, BigDecimal percentualDesconto, BigDecimal valorDesconto, BigDecimal total) {
+        this.itens = itens;
         this.subtotal = subtotal;
-        this.discountPercent = discountPercent;
-        this.discountValue = discountValue;
+        this.percentualDesconto = percentualDesconto;
+        this.valorDesconto = valorDesconto;
         this.total = total;
     }
 
-    public List<CartItem> getItems() { return items; }
+    public List<CartItem> getItens() { return itens; }
     public BigDecimal getSubtotal() { return subtotal; }
-    public BigDecimal getDiscountPercent() { return discountPercent; }
-    public BigDecimal getDiscountValue() { return discountValue; }
+    public BigDecimal getPercentualDesconto() { return percentualDesconto; }
+    public BigDecimal getValorDesconto() { return valorDesconto; }
     public BigDecimal getTotal() { return total; }
 }

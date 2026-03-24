@@ -15,35 +15,35 @@ import java.util.List;
 @Controller
 public class CartController {
 
-    private final CartService cartService;
-    private final ProductService productService;
+    private final CartService servicoCarrinho;
+    private final ProductService servicoProdutos;
 
-    public CartController(CartService cartService, ProductService productService) {
-        this.cartService = cartService;
-        this.productService = productService;
+    public CartController(CartService servicoCarrinho, ProductService servicoProdutos) {
+        this.servicoCarrinho = servicoCarrinho;
+        this.servicoProdutos = servicoProdutos;
     }
 
     @PostMapping("/cart/summary")
-    public String calculateSummary(
-            @RequestParam(name = "productId", required = false) List<Long> productIds,
-            @RequestParam(name = "quantity", required = false) List<Integer> quantities,
-            Model model) {
+    public String calcularResumo(
+            @RequestParam(name = "productId", required = false) List<Long> idsProdutos,
+            @RequestParam(name = "quantity", required = false) List<Integer> quantidades,
+            Model modelo) {
 
-        List<CartSelection> selections = new ArrayList<>();
+        List<CartSelection> selecoes = new ArrayList<>();
 
-        if (productIds != null && quantities != null) {
-            for (int i = 0; i < Math.min(productIds.size(), quantities.size()); i++) {
-                Integer quantity = quantities.get(i);
-                if (quantity != null && quantity > 0) {
-                    selections.add(new CartSelection(productIds.get(i), quantity));
+        if (idsProdutos != null && quantidades != null) {
+            for (int i = 0; i < Math.min(idsProdutos.size(), quantidades.size()); i++) {
+                Integer quantidade = quantidades.get(i);
+                if (quantidade != null && quantidade > 0) {
+                    selecoes.add(new CartSelection(idsProdutos.get(i), quantidade));
                 }
             }
         }
 
-        CartSummary summary = cartService.buildSummary(selections);
-        model.addAttribute("products", productService.listAll());
-        model.addAttribute("summary", summary);
-        model.addAttribute("featurePending", true);
+        CartSummary resumo = servicoCarrinho.construirResumo(selecoes);
+        modelo.addAttribute("products", servicoProdutos.listarTodos());
+        modelo.addAttribute("summary", resumo);
+        modelo.addAttribute("featurePending", true);
 
         return "index";
     }
