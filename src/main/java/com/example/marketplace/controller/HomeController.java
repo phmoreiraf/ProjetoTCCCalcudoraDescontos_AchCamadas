@@ -1,16 +1,17 @@
 package com.example.marketplace.controller;
 
-import com.example.marketplace.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.marketplace.service.ServicoProduto;
+
 @Controller
 public class HomeController {
 
-    private final ProductService servicoProdutos;
+    private final ServicoProduto servicoProdutos;
 
-    public HomeController(ProductService servicoProdutos) {
+    public HomeController(ServicoProduto servicoProdutos) {
         this.servicoProdutos = servicoProdutos;
     }
 

@@ -40,18 +40,18 @@ title Sistema de Cálculo de Descontos - Marketplace
 package "Camada de Apresentação" <<apresentacao>> {
   
   class HomeController <<@Controller>> {
-    - servicoProdutos: ProductService
+    - servicoProduto: ServicoProduto
     ____
-    + HomeController(servicoProdutos: ProductService)
+    + HomeController(servicoProduto: ServicoProduto)
     ____
     + index(modelo: Model): String
   }
 
-  class CartController <<@Controller>> {
-    - servicoCarrinho: CartService
-    - servicoProdutos: ProductService
+  class CarrinhoController <<@Controller>> {
+    - servicoCarrinho: ServicoCarrinho
+    - servicoProduto: ServicoProduto
     ____
-    + CartController(servicoCarrinho: CartService,\n    servicoProdutos: ProductService)
+    + CarrinhoController(servicoCarrinho: ServicoCarrinho,\n    servicoProduto: ServicoProduto)
     ____
     + calcularResumo(idsProdutos: List<Long>,\n    quantidades: List<Integer>,\n    modelo: Model): String
   }
@@ -62,20 +62,20 @@ package "Camada de Apresentação" <<apresentacao>> {
 ' ============================================
 package "Camada de Serviço" <<servico>> {
   
-  class ProductService <<@Service>> {
-    - repositorioProdutos: ProductRepository
+  class ServicoProduto <<@Service>> {
+    - repositorioProduto: ProdutoRepository
     ____
-    + ProductService(repositorioProdutos: ProductRepository)
+    + ServicoProduto(repositorioProduto: ProdutoRepository)
     ____
-    + listarTodos(): List<Product>
+    + listarTodos(): List<Produto>
   }
 
-  class CartService <<@Service>> {
-    - repositorioProdutos: ProductRepository
+  class ServicoCarrinho <<@Service>> {
+    - repositorioProduto: ProdutoRepository
     ____
-    + CartService(repositorioProdutos: ProductRepository)
+    + ServicoCarrinho(repositorioProduto: ProdutoRepository)
     ____
-    + construirResumo(selecoes: List<CartSelection>): CartSummary
+    + construirResumo(selecoes: List<SelecaoCarrinho>): ResumoCarrinho
   }
 }
 
@@ -84,18 +84,18 @@ package "Camada de Serviço" <<servico>> {
 ' ============================================
 package "Camada de Persistência" <<persistencia>> {
   
-  interface ProductRepository <<interface>> {
-    + buscarTodos(): List<Product>
-    + buscarPorId(id: Long): Optional<Product>
+  interface ProdutoRepository <<interface>> {
+    + buscarTodos(): List<Produto>
+    + buscarPorId(id: Long): Optional<Produto>
   }
 
-  class InMemoryProductRepository <<@Repository>> {
-    - produtos: List<Product>
+  class ProdutoEmMemoriaRepository <<@Repository>> {
+    - produtos: List<Produto>
     ____
-    + InMemoryProductRepository()
+    + ProdutoEmMemoriaRepository()
     ____
-    + buscarTodos(): List<Product>
-    + buscarPorId(id: Long): Optional<Product>
+    + buscarTodos(): List<Produto>
+    + buscarPorId(id: Long): Optional<Produto>
   }
 }
 
@@ -104,21 +104,21 @@ package "Camada de Persistência" <<persistencia>> {
 ' ============================================
 package "Camada de Modelo" <<modelo>> {
   
-  class Product {
+  class Produto {
     - id: Long
     - nome: String
     - preco: BigDecimal
-    - categoria: ProductCategory
+    - categoria: CategoriaProduto
     ____
-    + Product(id: Long, nome: String,\n    preco: BigDecimal, categoria: ProductCategory)
+    + Produto(id: Long, nome: String,\n    preco: BigDecimal, categoria: CategoriaProduto)
     ____
     + getId(): Long
     + getNome(): String
     + getPreco(): BigDecimal
-    + getCategoria(): ProductCategory
+    + getCategoria(): CategoriaProduto
   }
 
-  enum ProductCategory {
+  enum CategoriaProduto {
     CAPINHA
     CARREGADOR
     FONE
@@ -126,12 +126,12 @@ package "Camada de Modelo" <<modelo>> {
     SUPORTE
   }
 
-  class CartSelection {
+  class SelecaoCarrinho {
     - produtoId: Long
     - quantidade: Integer
     ____
-    + CartSelection()
-    + CartSelection(produtoId: Long, quantidade: Integer)
+    + SelecaoCarrinho()
+    + SelecaoCarrinho(produtoId: Long, quantidade: Integer)
     ____
     + getProdutoId(): Long
     + setProdutoId(produtoId: Long): void
@@ -139,27 +139,27 @@ package "Camada de Modelo" <<modelo>> {
     + setQuantidade(quantidade: Integer): void
   }
 
-  class CartItem {
-    - produto: Product
+  class ItemCarrinho {
+    - produto: Produto
     - quantidade: int
     ____
-    + CartItem(produto: Product, quantidade: int)
+    + ItemCarrinho(produto: Produto, quantidade: int)
     ____
     + calcularSubtotal(): BigDecimal
-    + getProduto(): Product
+    + getProduto(): Produto
     + getQuantidade(): int
   }
 
-  class CartSummary {
-    - itens: List<CartItem>
+  class ResumoCarrinho {
+    - itens: List<ItemCarrinho>
     - subtotal: BigDecimal
     - percentualDesconto: BigDecimal
     - valorDesconto: BigDecimal
     - total: BigDecimal
     ____
-    + CartSummary(itens: List<CartItem>, subtotal: BigDecimal,\n    percentualDesconto: BigDecimal, valorDesconto: BigDecimal,\n    total: BigDecimal)
+    + ResumoCarrinho(itens: List<ItemCarrinho>, subtotal: BigDecimal,\n    percentualDesconto: BigDecimal, valorDesconto: BigDecimal,\n    total: BigDecimal)
     ____
-    + getItens(): List<CartItem>
+    + getItens(): List<ItemCarrinho>
     + getSubtotal(): BigDecimal
     + getPercentualDesconto(): BigDecimal
     + getValorDesconto(): BigDecimal
@@ -172,33 +172,33 @@ package "Camada de Modelo" <<modelo>> {
 ' ============================================
 
 ' Apresentação -> Serviço
-HomeController --> ProductService
-CartController --> CartService
-CartController --> ProductService
+HomeController --> ServicoProduto
+CarrinhoController --> ServicoCarrinho
+CarrinhoController --> ServicoProduto
 
 ' Serviço -> Persistência
-ProductService --> ProductRepository
-CartService --> ProductRepository
+ServicoProduto --> ProdutoRepository
+ServicoCarrinho --> ProdutoRepository
 
 ' Persistência -> Modelo
-InMemoryProductRepository ..|> ProductRepository
-InMemoryProductRepository ..> Product
+ProdutoEmMemoriaRepository ..|> ProdutoRepository
+ProdutoEmMemoriaRepository ..> Produto
 
 ' Serviço -> Modelo
-ProductService ..> Product
-CartService ..> Product
-CartService ..> CartSelection
-CartService ..> CartItem
-CartService ..> CartSummary
+ServicoProduto ..> Produto
+ServicoCarrinho ..> Produto
+ServicoCarrinho ..> SelecaoCarrinho
+ServicoCarrinho ..> ItemCarrinho
+ServicoCarrinho ..> ResumoCarrinho
 
 ' Controllers -> Modelo
-CartController ..> CartSelection
-CartController ..> CartSummary
+CarrinhoController ..> SelecaoCarrinho
+CarrinhoController ..> ResumoCarrinho
 
 ' Relacionamentos de Modelo
-Product --> ProductCategory
-CartItem --> Product
-CartSelection ..> Product
-CartSummary *-- "0..*" CartItem
+Produto --> CategoriaProduto
+ItemCarrinho --> Produto
+SelecaoCarrinho ..> Produto
+ResumoCarrinho *-- "0..*" ItemCarrinho
 
 @enduml

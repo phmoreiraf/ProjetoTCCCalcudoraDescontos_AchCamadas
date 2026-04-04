@@ -14,26 +14,26 @@ title Diagrama de Componentes - Sistema de Cálculo de Descontos
 
 package "Camada de Apresentação" LIGHTBLUE {
   component "HomeController" as HC <<@Controller>>
-  component "CartController" as CC <<@Controller>>
+  component "CarrinhoController" as CC <<@Controller>>
   component "Interface Web" as UI <<Thymeleaf>>
 }
 
 package "Camada de Serviço" LIGHTORANGE {
-  component "ProductService" as PS <<@Service>>
-  component "CartService" as CS <<@Service>>
+  component "ServicoProduto" as PS <<@Service>>
+  component "ServicoCarrinho" as CS <<@Service>>
 }
 
 package "Camada de Persistência" LIGHTPURPLE {
-  interface "ProductRepository" as PR
-  component "InMemoryProductRepository" as IMPR <<@Repository>>
+  interface "ProdutoRepository" as PR
+  component "ProdutoEmMemoriaRepository" as IMPR <<@Repository>>
 }
 
 package "Camada de Modelo" LIGHTGREEN {
-  component "Product" as P
-  component "ProductCategory" as PC <<enum>>
-  component "CartSelection" as CSel
-  component "CartItem" as CI
-  component "CartSummary" as CSummary
+  component "Produto" as P
+  component "CategoriaProduto" as PC <<enum>>
+  component "SelecaoCarrinho" as CSel
+  component "ItemCarrinho" as CI
+  component "ResumoCarrinho" as CSummary
 }
 
 ' Relacionamentos Camada de Apresentação

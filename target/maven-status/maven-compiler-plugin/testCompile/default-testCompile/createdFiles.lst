@@ -1,4 +1,7 @@
-com\example\marketplace\controller\CartControllerTest.class
-com\example\marketplace\service\CartServiceTest.class
-com\example\marketplace\architecture\LayeredArchitectureTest.class
+com\example\marketplace\architecture\ArquiteturaEmCamadasTest.class
+com\example\marketplace\service\ServicoProdutoTest.class
+com\example\marketplace\service\ServicoCarrinhoTest.class
 com\example\marketplace\controller\HomeControllerTest.class
+com\example\marketplace\AplicacaoMercadoTest.class
+com\example\marketplace\model\SelecaoCarrinhoTest.class
+com\example\marketplace\controller\CarrinhoControllerTest.class

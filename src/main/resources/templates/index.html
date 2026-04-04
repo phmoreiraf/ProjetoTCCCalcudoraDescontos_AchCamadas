@@ -26,14 +26,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="product : ${products}">
+                <tr th:each="produto : ${products}">
                     <td>
-                        <input type="hidden" name="productId" th:value="${product.id}">
+                        <input type="hidden" name="productId" th:value="${produto.id}">
                         <span>✔</span>
                     </td>
-                    <td th:text="${product.nome}"></td>
-                    <td th:text="${product.categoria}"></td>
-                    <td th:text="${'R$ ' + product.preco}"></td>
+                    <td th:text="${produto.nome}"></td>
+                    <td th:text="${produto.categoria}"></td>
+                    <td th:text="${'R$ ' + produto.preco}"></td>
                     <td><input type="number" name="quantity" min="0" value="0"></td>
                 </tr>
                 </tbody>
