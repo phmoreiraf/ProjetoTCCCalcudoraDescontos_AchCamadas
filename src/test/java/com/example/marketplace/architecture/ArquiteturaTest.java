@@ -32,7 +32,7 @@ class ArquiteturaTest {
      * - Model não pode acessar nenhuma outra camada
      */
     @Test
-    void validarArquiteturaEmCamadas() {
+    void validarArquitetura() {
         layeredArchitecture()
                 .consideringOnlyDependenciesInLayers()
 

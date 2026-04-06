@@ -1,4 +1,4 @@
-# Sistema de Cálculo de Descontos para Marketplace em Arquitetura em Camadas
+# Sistema de Cálculo de Descontos para Marketplace
 
 ## Visão Geral do Projeto
 

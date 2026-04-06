@@ -13,9 +13,9 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>marketplace-discount-layered</artifactId>
+    <artifactId>marketplace-discount</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>marketplace-discount-layered</name>
+    <name>marketplace-discount</name>
     <description>Sistema de cálculo de descontos para marketplace usando arquitetura em camadas</description>
 
     <properties>

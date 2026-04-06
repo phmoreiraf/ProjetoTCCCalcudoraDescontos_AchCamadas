@@ -3,8 +3,6 @@
 ## Contexto
 Este projeto faz parte de um experimento acadêmico para avaliar esforço de compreensão e esforço de modificação em diferentes arquiteturas de software.
 
-Você recebeu a versão do sistema implementada com **arquitetura em camadas**.
-
 ## Sua tarefa
 1. Identificar a arquitetura usada no projeto.
 2. Justificar com base na estrutura do código.
