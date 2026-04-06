@@ -88,4 +88,4 @@ Os arquivos estão em `docs/`.
 
 ## Responda o formulario de feedback (OBRIGATÓRIO)
 Após a conclusão da atividade, por favor, responda o formulário de feedback para ajudar na avaliação do experimento:
-[Formulário de Feedback]()
+[Formulário de Feedback](https://forms.gle/UyJUz9aqmeyx8L5R9)
