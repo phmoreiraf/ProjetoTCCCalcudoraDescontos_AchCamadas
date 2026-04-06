@@ -44,7 +44,7 @@ mvn test
 
 ### Executar apenas os testes de arquitetura (ArchUnit)
 ```bash
-mvn test -Dtest=ArquiteturaEmCamadasTest
+mvn test -Dtest=ArquiteturaTest
 ```
 
 ### Executar testes com relatório de cobertura
