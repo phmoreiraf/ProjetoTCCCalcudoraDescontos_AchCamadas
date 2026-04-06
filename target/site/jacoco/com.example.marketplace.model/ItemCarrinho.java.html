@@ -7,21 +7,21 @@ public class ItemCarrinho {
     private Produto produto;
     private int quantidade;
 
-<span class="fc" id="L10">    public ItemCarrinho(Produto produto, int quantidade) {</span>
-<span class="fc" id="L11">        this.produto = produto;</span>
-<span class="fc" id="L12">        this.quantidade = quantidade;</span>
-<span class="fc" id="L13">    }</span>
+<span class="nc" id="L10">    public ItemCarrinho(Produto produto, int quantidade) {</span>
+<span class="nc" id="L11">        this.produto = produto;</span>
+<span class="nc" id="L12">        this.quantidade = quantidade;</span>
+<span class="nc" id="L13">    }</span>
 
     public BigDecimal calcularSubtotal() {
-<span class="fc" id="L16">        return produto.getPreco().multiply(BigDecimal.valueOf(quantidade));</span>
+<span class="nc" id="L16">        return produto.getPreco().multiply(BigDecimal.valueOf(quantidade));</span>
     }
 
     public Produto getProduto() {
-<span class="fc" id="L20">        return produto;</span>
+<span class="nc" id="L20">        return produto;</span>
     }
 
     public int getQuantidade() {
-<span class="fc" id="L24">        return quantidade;</span>
+<span class="nc" id="L24">        return quantidade;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

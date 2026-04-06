@@ -1,4 +1,3 @@
-com\example\marketplace\architecture\ArquiteturaEmCamadasTest.class
 com\example\marketplace\service\ServicoProdutoTest.class
 com\example\marketplace\service\ServicoCarrinhoTest.class
 com\example\marketplace\controller\HomeControllerTest.class

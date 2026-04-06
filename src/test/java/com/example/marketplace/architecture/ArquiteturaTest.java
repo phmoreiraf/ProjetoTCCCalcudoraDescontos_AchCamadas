@@ -14,7 +14,7 @@ import com.tngtech.archunit.lang.ArchRule;
  * Testes de arquitetura usando ArchUnit.
  * Valida que a arquitetura em camadas está sendo respeitada.
  */
-class ArquiteturaEmCamadasTest {
+class ArquiteturaTest {
 
     private static JavaClasses classesImportadas;
 
